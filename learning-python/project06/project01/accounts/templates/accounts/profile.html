@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}signup Page{% endblock %}
+
+{% block content %}
+    <h1>{{ user.username }}님의 프로필</h1>
+    <p>이메일: {{ user.email }}</p>
+    <p>가입일: {{ user.date_joined }}</p>
+    <p>소개글: {{ user.bio }}</p>
+    <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">로그아웃</button>
+    </form>
+    </body>
+{% endblock %}

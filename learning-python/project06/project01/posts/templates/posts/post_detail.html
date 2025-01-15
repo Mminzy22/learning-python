@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Posts Page{% endblock %}
+
+{% block content %}
+    <h1>Post Detail</h1>
+
+    <h2>{{ post.title }}</h2>
+    <p>작성자: {{ post.author }}</p>
+    <p>작성일: {{ post.created_at }}</p>
+    <p>수정일: {{ post.updated_at }}</p>
+    <hr>
+    <div>
+        <p>{{ post.content }}</p>
+    </div>
+
+    <div>
+        <form action="{% url 'posts:post_like_toggle' post.id %}" method="POST">
+            {% csrf_token %}
+            {% if user in post.likes.all %}
+                <button type="submit">좋아요 취소</button>
+            {% else %}
+                <button type="submit">좋아요</button>
+            {% endif %}
+        </form>
+        <span>{{ post.total_likes }}명이 좋아합니다.</span>
+    </div>
+
+    {% if user.is_authenticated and user.username == post.author %}
+    <a href="{% url 'posts:post_update' post.id %}">수정</a>
+    <a href="{% url 'posts:post_delete' post.id %}">삭제</a>
+    {% endif %}
+    <a href="{% url 'posts:post_list' %}">목록으로 돌아가기</a>
+
+    {% if user.is_authenticated %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">댓글 작성</button>
+    </form>
+    {% else %}
+    <p>댓글을 작성하려면 <a href="{% url 'accounts:login' %}">로그인</a>하세요.</p>
+    {% endif %}
+
+    <div>
+        <h2>댓글</h2>
+        <ul>
+            {% for comment in comments %}
+                <li>
+                    <strong>{{ comment.author }}</strong> ({{ comment.created_at }}): 
+                    <p>{{ comment.content }}</p>
+                    {% if user.is_authenticated and user.username == comment.author %}
+                        <a href="{% url 'posts:comment_update' comment.id %}">수정</a>
+                        <a href="{% url 'posts:comment_delete' comment.id %}">삭제</a>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>댓글이 없습니다. 첫 댓글을 작성해보세요!</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}

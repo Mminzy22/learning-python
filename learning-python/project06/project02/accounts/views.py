@@ -1,27 +1,50 @@
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
-from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.views.generic.detail import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import CustomUserForm
+from .forms import CustomUserForm, CustomPasswordChangeForm, ProfileUpdateForm
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class SignupView(CreateView):
-    # 템플릿 파일 경로
     template_name = "accounts/signup.html"
     form_class = CustomUserForm
-    # 회원가입 성공 시 사용자를 리다이렉트할 URL
     success_url = reverse_lazy('accounts:login')
 
 
 class UserLoginView(LoginView):
-    pass
+    template_name = "accounts/login.html"
 
 
 class UserLogoutView(LogoutView):
     pass
 
 
-class ProfileView(DetailView):
-    pass
+class ProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = "accounts/profile.html"
+
+    # 현재 로그인한 사용자의 프로필 정보를 보여줌
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = ProfileUpdateForm
+    template_name = "accounts/profile_update.html"
+    success_url = reverse_lazy('accounts:profile')
+
+    # 현재 로그인한 사용자의 정보를 수정
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
+    form_class = CustomPasswordChangeForm
+    template_name = "accounts/change_password.html"
+    success_url = reverse_lazy('accounts:profile')

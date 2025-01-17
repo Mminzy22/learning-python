@@ -10,6 +10,20 @@
             {% block header %}
             <nav>
                 <a href="{% url 'index' %}">홈</a>
+                <a href="{% url 'posts:post_list' %}">게시글</a>
+                
+                {% if user.is_authenticated %}
+                    <!-- 로그인한 사용자에게만 표시 -->
+                    <form method="post" action="{% url 'accounts:logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                    <a href="{% url 'accounts:profile' %}">프로필</a>
+                {% else %}
+                    <!-- 비로그인 사용자에게만 표시 -->
+                    <a href="{% url 'accounts:signup' %}">회원가입</a>
+                    <a href="{% url 'accounts:login' %}">로그인</a>
+                {% endif %}
             </nav>
             {% endblock %}
         </header>

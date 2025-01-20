@@ -76,14 +76,47 @@ project06/
 - **설명**: DRF(Django Rest Framework)를 활용한 API 기반 Django 프로젝트 및 데이터베이스 확장.
 - **추가 기능**:
   - DRF 변환 (APIView, Serializer 활용)
-  - 데이터베이스 SQLite3에서 PostgreSQL로 마이그레이션
+  - 데이터베이스 SQLite3에서 MySQL로 마이그레이션
 - **기술 스택**:
   - Python, Django, Django Rest Framework, MySQL, HTML
-- **디렉토리 구조** (예정):
+- **디렉토리 구조** :
 
   ```
   project02/
-
+  │
+  ├── accounts/                  # 사용자 인증 앱
+  │   ├── migrations/            # 데이터베이스 마이그레이션 파일
+  │   ├── templates/accounts/    # 인증 관련 템플릿
+  │   ├── admin.py               # 어드민 설정
+  │   ├── apps.py                # 앱 설정
+  │   ├── forms.py               # 사용자 폼
+  │   ├── models.py              # 사용자 모델
+  │   ├── tests.py               # 테스트 코드
+  │   ├── urls.py                # URL 라우팅
+  │   └── views.py               # 인증 관련 뷰
+  │
+  ├── posts/                     # 게시글 관리 앱
+  │   ├── migrations/            # 데이터베이스 마이그레이션 파일
+  │   ├── templates/posts/       # 게시글 템플릿
+  │   ├── admin.py               # 어드민 설정
+  │   ├── apps.py                # 앱 설정
+  │   ├── forms.py               # 게시글 폼
+  │   ├── models.py              # 게시글 모델
+  │   ├── tests.py               # 테스트 코드
+  │   ├── urls.py                # URL 라우팅
+  │   └── views.py               # 게시글 관련 뷰
+  │
+  ├── core/                      # 프로젝트 기본 설정
+  │   ├── templates/core/        # 기본 템플릿
+  │   ├── admin.py               # 어드민 설정
+  │   ├── apps.py                # 앱 설정
+  │   ├── urls.py                # 메인 URL 설정
+  │   └── views.py               # 기본 뷰
+  │
+  ├── templates/                 # 공통 템플릿
+  │   └── base.html              # 기본 레이아웃
+  ├── manage.py                  # Django 관리 명령어 스크립트
+  └── requirements.txt           # 필요한 라이브러리
   ```
 
 ---

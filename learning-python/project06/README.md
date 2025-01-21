@@ -212,13 +212,13 @@ pip install -r requirements.txt
 
 5. 프로젝트 루트 경로 `.env` 파일 생성 및 작성:
 
-  ```
-  DB_NAME=<DB_name>
-  DB_USER=user_name
-  DB_PASSWORD=user_password
-  DB_HOST=127.0.0.1
-  DB_PORT=3306
-  ```
+   ```
+   DB_NAME=<DB_name>
+   DB_USER=user_name
+   DB_PASSWORD=user_password
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   ```
 
 #### **공통 데이터베이스 설정**
 

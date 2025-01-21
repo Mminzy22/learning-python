@@ -181,10 +181,52 @@ pip install -r requirements.txt
 
 ### 3. 데이터베이스 설정
 
+**MySQL 서버 실행 및 설정 (project03 실행)**
+1. MySQL 서버 실행:
+
+   ```bash
+   mysqld --console
+   ```
+
+2. MySQL 접속:
+
+   ```bash
+   mysql -u root -p
+   ```
+
+3. 데이터베이스 및 사용자 생성:
+
+   ```sql
+   CREATE DATABASE <DB_name> CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   CREATE USER 'user_name'@'localhost' IDENTIFIED BY 'user_password';
+   GRANT ALL PRIVILEGES ON <DB_name>.* TO 'user_name'@'localhost';
+   FLUSH PRIVILEGES;
+   ```
+
+4. 데이터베이스 접속 확인:
+
+   ```bash
+   mysql -u user_name -p
+   USE <DB_name>;
+   ```
+
+5. 프로젝트 루트 경로 `.env` 파일 생성 및 작성:
+
+  ```
+  DB_NAME=<DB_name>
+  DB_USER=user_name
+  DB_PASSWORD=user_password
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  ```
+
+#### **공통 데이터베이스 설정**
+
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
+
 
 ### 4. 관리자 계정 생성
 
